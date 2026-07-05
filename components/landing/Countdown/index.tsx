@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export default function Countdown() {
-  const targetDate = new Date("2026-09-20T08:00:00").getTime();
+  const targetDate = new Date("2026-07-14T08:00:00").getTime();
 
   const [timeLeft, setTimeLeft] = useState({
     days: "000",
