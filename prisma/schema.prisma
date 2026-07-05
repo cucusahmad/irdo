@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model competition {
+  competition_id          BigInt        @id @default(autoincrement())
+  competition_name        String        @db.VarChar(150)
+  competition_slug        String        @unique @db.VarChar(150)
+  competition_level       String        @db.VarChar(50)
+  competition_description String?
+  registration_fee        Decimal?      @default(0) @db.Decimal(12, 2)
+  max_member              Int?          @default(1)
+  poster                  String?
+  is_active               Boolean?      @default(true)
+  created_at              DateTime?     @default(now()) @db.Timestamp(6)
+  updated_at              DateTime?     @default(now()) @db.Timestamp(6)
+  participant             participant[]
+}
+
+model participant {
+  participant_id        BigInt                 @id @default(autoincrement())
+  competition_id        BigInt
+  registration_number   String?                @unique @db.VarChar(30)
+  team_name             String?                @db.VarChar(150)
+  institution_name      String?                @db.VarChar(200)
+  country               String?                @db.VarChar(100)
+  province              String?                @db.VarChar(100)
+  city                  String?                @db.VarChar(100)
+  address               String?
+  leader_name           String?                @db.VarChar(150)
+  leader_gender         String?                @db.VarChar(20)
+  leader_phone          String?                @db.VarChar(30)
+  leader_student_number String?                @db.VarChar(100)
+  leader_photo          String?
+  registration_status   String?                @default("PENDING") @db.VarChar(30)
+  payment_status        String?                @default("UNPAID") @db.VarChar(30)
+  notes                 String?
+  created_at            DateTime?              @default(now()) @db.Timestamp(6)
+  updated_at            DateTime?              @default(now()) @db.Timestamp(6)
+  account_id            BigInt                 @unique(map: "uq_participant_account")
+  accounts              accounts               @relation(fields: [account_id], references: [account_id], onDelete: Cascade, map: "fk_participant_account")
+  competition           competition            @relation(fields: [competition_id], references: [competition_id], onUpdate: NoAction, map: "fk_participant_competition")
+  participant_document  participant_document[]
+  participant_member    participant_member[]
+
+  @@index([competition_id], map: "idx_participant_competition")
+  @@index([account_id], map: "idx_participant_account")
+}
+
+model participant_document {
+  document_id    BigInt      @id @default(autoincrement())
+  participant_id BigInt
+  payment_proof  String?
+  student_card   String?
+  proposal_file  String?
+  poster_file    String?
+  other_document String?
+  created_at     DateTime?   @default(now()) @db.Timestamp(6)
+  document_type  String?     @db.VarChar(30)
+  document_title String?     @db.VarChar(150)
+  file_name      String?     @db.VarChar(255)
+  file_path      String?
+  participant    participant @relation(fields: [participant_id], references: [participant_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_document_participant")
+
+  @@index([participant_id], map: "idx_document_participant")
+  @@index([document_title], map: "idx_document_title")
+  @@index([document_type], map: "idx_document_type")
+}
+
+model participant_member {
+  member_id      BigInt      @id @default(autoincrement())
+  participant_id BigInt
+  full_name      String      @db.VarChar(150)
+  gender         String?     @db.VarChar(20)
+  student_number String?     @db.VarChar(100)
+  email          String?     @db.VarChar(150)
+  phone          String?     @db.VarChar(30)
+  photo          String?
+  created_at     DateTime?   @default(now()) @db.Timestamp(6)
+  participant    participant @relation(fields: [participant_id], references: [participant_id], onDelete: Cascade, onUpdate: NoAction, map: "fk_member_participant")
+
+  @@index([participant_id], map: "idx_member_participant")
+}
+
+model accounts {
+  account_id  BigInt       @id @default(autoincrement())
+  email       String       @unique @db.VarChar(150)
+  password    String       @db.VarChar(255)
+  role        String       @default("PARTICIPANT") @db.VarChar(20)
+  created_at  DateTime?    @default(now()) @db.Timestamp(6)
+  updated_at  DateTime?    @default(now()) @db.Timestamp(6)
+  participant participant?
+}

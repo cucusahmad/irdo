@@ -1,26 +1,312 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+
+  --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) * .6);
+  --radius-md: calc(var(--radius) * .8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =====================================================
+   IRDO 2026 THEME
+===================================================== */
+
+:root {
+  --background: #050816;
+  --foreground: #ffffff;
+
+  --card: #111827;
+  --card-foreground: #ffffff;
+
+  --popover: #0b1126;
+  --popover-foreground: #ffffff;
+
+  --primary: #00a8ff;
+  --primary-foreground: #ffffff;
+
+  --secondary: #6d28d9;
+  --secondary-foreground: #ffffff;
+
+  --muted: #1e293b;
+  --muted-foreground: #cbd5e1;
+
+  --accent: #38bdf8;
+  --accent-foreground: #ffffff;
+
+  --destructive: #ef4444;
+
+  --border: rgba(56, 189, 248, .18);
+  --input: rgba(255,255,255,.08);
+
+  --ring: #00a8ff;
+
+  --chart-1: #00a8ff;
+  --chart-2: #7c3aed;
+  --chart-3: #38bdf8;
+  --chart-4: #2563eb;
+  --chart-5: #9333ea;
+
+  --radius: 1rem;
+
+  /* Sidebar */
+
+  --sidebar: #0b1126;
+  --sidebar-foreground: #ffffff;
+
+  --sidebar-primary: #00a8ff;
+  --sidebar-primary-foreground: #ffffff;
+
+  --sidebar-accent: #111827;
+  --sidebar-accent-foreground: #ffffff;
+
+  --sidebar-border: rgba(56,189,248,.15);
+  --sidebar-ring: #00a8ff;
+}
+
+.dark {
+  --background: #050816;
+  --foreground: #ffffff;
+
+  --card: #111827;
+  --card-foreground: #ffffff;
+
+  --popover: #0b1126;
+  --popover-foreground: #ffffff;
+
+  --primary: #00a8ff;
+  --primary-foreground: #ffffff;
+
+  --secondary: #6d28d9;
+  --secondary-foreground: #ffffff;
+
+  --muted: #1e293b;
+  --muted-foreground: #cbd5e1;
+
+  --accent: #38bdf8;
+  --accent-foreground: #ffffff;
+
+  --destructive: #ef4444;
+
+  --border: rgba(56,189,248,.18);
+  --input: rgba(255,255,255,.08);
+
+  --ring: #00a8ff;
+
+  --chart-1: #00a8ff;
+  --chart-2: #7c3aed;
+  --chart-3: #38bdf8;
+  --chart-4: #2563eb;
+  --chart-5: #9333ea;
+
+  --sidebar: #0b1126;
+  --sidebar-foreground: #ffffff;
+
+  --sidebar-primary: #00a8ff;
+  --sidebar-primary-foreground: #ffffff;
+
+  --sidebar-accent: #111827;
+  --sidebar-accent-foreground: #ffffff;
+
+  --sidebar-border: rgba(56,189,248,.15);
+  --sidebar-ring: #00a8ff;
+}
+
+/* =====================================================
+   BASE
+===================================================== */
+
+@layer base {
+
+  *{
+    @apply border-border outline-ring/50;
   }
+
+  html{
+    scroll-behavior:smooth;
+    @apply font-sans;
+  }
+
+  body{
+    @apply bg-background text-foreground;
+
+    background:
+      radial-gradient(circle at top,#13234c 0%,transparent 45%),
+      linear-gradient(
+        180deg,
+        #050816 0%,
+        #081229 35%,
+        #0b1126 70%,
+        #050816 100%
+      );
+
+    min-height:100vh;
+  }
+
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =====================================================
+   COMPONENTS
+===================================================== */
+
+.section-title{
+  color:white;
+  font-weight:700;
+  text-shadow:0 0 12px rgba(0,168,255,.5);
 }
+
+.card-irdo{
+
+  background:linear-gradient(
+      180deg,
+      rgba(17,24,39,.95),
+      rgba(13,25,52,.95)
+  );
+
+  border:1px solid rgba(56,189,248,.18);
+
+  border-radius:24px;
+
+  backdrop-filter:blur(18px);
+
+  transition:.35s;
+}
+
+.card-irdo:hover{
+
+  transform:translateY(-6px);
+
+  box-shadow:
+      0 0 20px rgba(0,168,255,.25),
+      0 0 40px rgba(109,40,217,.22);
+}
+
+.btn-irdo{
+
+  background:linear-gradient(
+      90deg,
+      #00a8ff,
+      #3b82f6,
+      #6d28d9
+  );
+
+  color:white;
+
+  border-radius:999px;
+
+  padding:14px 28px;
+
+  font-weight:600;
+
+  transition:.35s;
+}
+
+.btn-irdo:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+      0 0 20px rgba(0,168,255,.4),
+      0 0 40px rgba(109,40,217,.3);
+}
+
+.glass{
+
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  backdrop-filter:blur(20px);
+}
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-track{
+  background:#050816;
+}
+
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(#00a8ff,#6d28d9);
+  border-radius:999px;
+}
+
+::selection{
+  background:#00a8ff;
+  color:white;
+}
+
+h1,
+h2,
+h3{
+    font-family:var(--font-heading);
+}
+
+.hero-title{
+    text-shadow:
+        0 0 25px rgba(0,168,255,.15);
+}
+
+.hero-title {
+  text-shadow:
+    0 0 15px rgba(0, 168, 255, 0.2),
+    0 0 35px rgba(124, 58, 237, 0.15);
+}
+
