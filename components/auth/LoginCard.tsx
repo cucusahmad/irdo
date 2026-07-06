@@ -43,14 +43,21 @@ async function onSubmit(data: LoginForm) {
     );
     console.log(response);
 
-    toast.success("Login berhasil");
+  toast.success("Login berhasil");
 
-    console.log("Redirecting to dashboard...");
+const role = response.data.data.role;
 
-    // beri waktu browser menyimpan cookie
-    setTimeout(() => {
-      window.location.href = "/dashboard";
-    }, 300);
+setTimeout(() => {
+
+  if (role === "ADMIN") {
+    window.location.href =
+      "/dashboard/admin";
+  } else {
+    window.location.href =
+      "/dashboard";
+  }
+
+}, 300);
 
   } catch (error: any) {
     toast.error(

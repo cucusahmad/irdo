@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Download } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 
 export default function HeroContent() {
+  const router = useRouter();
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -60 }}
@@ -13,7 +15,6 @@ export default function HeroContent() {
       className="max-w-2xl"
     >
       {/* Badge */}
-
       <div className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-500/10 px-5 py-2 backdrop-blur-xl">
         <span className="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-300">
           The Future is Built Today
@@ -21,9 +22,8 @@ export default function HeroContent() {
       </div>
 
       {/* Title */}
-
       <h1 className="hero-title mt-8 leading-[0.95]">
-                <span className="block text-4xl font-black text-white md:text-5xl xl:text-6xl">
+        <span className="block text-4xl font-black text-white md:text-5xl xl:text-6xl">
           INTERNATIONAL
         </span>
 
@@ -37,7 +37,6 @@ export default function HeroContent() {
       </h1>
 
       {/* Motto */}
-
       <div className="mt-8 flex flex-wrap gap-8 text-lg font-semibold">
         <span className="text-cyan-300">LEARN.</span>
         <span className="text-cyan-300">BUILD.</span>
@@ -45,17 +44,19 @@ export default function HeroContent() {
       </div>
 
       {/* Description */}
-
       <p className="mt-8 max-w-xl text-lg leading-9 text-slate-300">
         Join the biggest international robotics competition where innovators
         from around the world design, build, and compete to shape the future
         through technology and creativity.
       </p>
 
-      {/* Button */}
-
+      {/* Buttons */}
       <div className="mt-12 flex flex-wrap gap-5">
-        <button className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_35px_rgba(0,168,255,.45)]">
+        <button
+          type="button"
+          onClick={() => router.push("/auth/register")}
+          className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-purple-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_35px_rgba(0,168,255,.45)]"
+        >
           Register Now
           <ArrowRight
             size={18}
@@ -63,7 +64,10 @@ export default function HeroContent() {
           />
         </button>
 
-        <button className="group flex items-center gap-2 rounded-full border border-cyan-400/20 bg-white/5 px-8 py-4 font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:border-cyan-400 hover:bg-white/10">
+        <button
+          type="button"
+          className="group flex items-center gap-2 rounded-full border border-cyan-400/20 bg-white/5 px-8 py-4 font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:border-cyan-400 hover:bg-white/10"
+        >
           Download Guidebook
           <Download
             size={18}
@@ -71,10 +75,6 @@ export default function HeroContent() {
           />
         </button>
       </div>
-
-
-
-    
     </motion.div>
   );
 }
